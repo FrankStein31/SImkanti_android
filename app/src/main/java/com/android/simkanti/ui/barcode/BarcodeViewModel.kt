@@ -1,13 +1,13 @@
-package com.android.simkanti.ui.notifications
+package com.android.simkanti.ui.barcode
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class BarcodeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is Barcode Fragment"
     }
     val text: LiveData<String> = _text
 }
