@@ -42,23 +42,36 @@ class ProfileFragment : Fragment() {
         // Set initial data
         binding.tvNama.text = nama
         binding.tvNim.text = nim
+        binding.tvNamaHeader.text = nama
+        binding.tvNimHeader.text = nim
 
         // Load profile data including saldo
         loadProfileData(nim)
 
         // Setup logout button
         binding.btnLogout.setOnClickListener {
-            // Clear shared preferences
-            requireActivity().getSharedPreferences("login_data", 0)
-                .edit()
-                .clear()
-                .apply()
+            val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            builder.setTitle("Konfirmasi Logout")
+            builder.setMessage("Apakah Anda yakin ingin logout?")
+            builder.setPositiveButton("Ya") { dialog, _ ->
+                // Clear shared preferences
+                requireActivity().getSharedPreferences("login_data", 0)
+                    .edit()
+                    .clear()
+                    .apply()
 
-            // Redirect to login
-            val intent = Intent(requireActivity(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            requireActivity().finish()
+                // Redirect to login
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                requireActivity().finish()
+
+                dialog.dismiss() // Tutup dialog
+            }
+            builder.setNegativeButton("Batal") { dialog, _ ->
+                dialog.dismiss() // Tutup dialog jika pengguna memilih batal
+            }
+            builder.create().show() // Tampilkan dialog
         }
     }
 

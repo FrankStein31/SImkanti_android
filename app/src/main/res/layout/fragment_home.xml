@@ -17,6 +17,7 @@
         android:text="Simkanti!"
         android:textColor="#1A1A1A"
         android:textSize="24sp"
+        android:textStyle="bold"
         android:fontFamily="sans-serif-medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
