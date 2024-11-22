@@ -23,7 +23,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var tvLogin: TextView
 
     // Ganti URL sesuai dengan alamat server Anda
-    private val URL = "http://192.168.1.87/kasir_toko/api_android/register.php"
+    private val URL = "http://192.168.1.91/kasir_toko/api_android/register.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
