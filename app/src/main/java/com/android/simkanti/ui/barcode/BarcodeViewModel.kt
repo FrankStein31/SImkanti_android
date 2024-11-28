@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class BarcodeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is Barcode Fragment"
+        value = "This is Barcode Fragment halooo"
     }
     val text: LiveData<String> = _text
 }
