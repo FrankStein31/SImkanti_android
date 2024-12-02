@@ -2,6 +2,7 @@ package com.android.simkanti
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -20,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tvRegister: TextView
 
     // Ganti URL sesuai dengan alamat server Anda
-    private val URL = "http://192.168.1.91/kasir_toko/api_android/login.php"
+    private val URL = "http://192.168.18.13/kasir_toko/api_android/login.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
             },
             Response.ErrorListener { error ->
                 Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                Log.e("Login", "Error :  ${error.message}")
             }) {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()

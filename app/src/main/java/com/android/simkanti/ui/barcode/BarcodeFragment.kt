@@ -3,6 +3,7 @@ package com.android.simkanti.ui.barcode
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,21 +30,28 @@ class BarcodeFragment : Fragment() {
     private val barcodeCallback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult?) {
             result?.let { barcodeResult ->
-                // Extract and validate QR code content (assuming format is "amount:value")
+                // Extract and validate QR code content
                 val content = barcodeResult.text
                 try {
                     val parts = content.split(":")
-                    if (parts.size == 2 && parts[0] == "amount") {
-                        val amount = parts[1].toDoubleOrNull()
+                    if (parts.size == 2 && parts[0].trim() == "Total Harga") {
+                        val rawAmount = parts[1].trim() // E.g., "Rp. 30,000"
+                        val cleanedAmount = rawAmount.replace("Rp.", "").replace(",", "").trim()
+                        val amount = cleanedAmount.toDoubleOrNull()
                         amount?.let {
                             binding.textQrAmount.text = "Rp ${String.format("%,.2f", it)}"
                             barcodeScanner.pause()
+                        } ?: run {
+                            Toast.makeText(requireContext(), "Format QR Code salah", Toast.LENGTH_SHORT).show()
+                            Log.e("Barcode", "Invalid amount format: $content")
                         }
                     } else {
                         Toast.makeText(requireContext(), "Invalid QR Code", Toast.LENGTH_SHORT).show()
+                        Log.e("Barcode", "Content : $content")
                     }
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "Error reading QR Code", Toast.LENGTH_SHORT).show()
+                    Log.e("Barcode", "Exception : ${e.message}")
                 }
             }
         }

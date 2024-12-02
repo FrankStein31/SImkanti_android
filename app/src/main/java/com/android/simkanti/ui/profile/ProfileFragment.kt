@@ -20,7 +20,7 @@ import java.util.Locale
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private val URL = "http://192.168.1.91/kasir_toko/api_android/get_profile.php"
+    private val URL = "http://192.168.18.13/kasir_toko/api_android/get_profile.php"
 
     override fun onCreateView(
         inflater: LayoutInflater,
