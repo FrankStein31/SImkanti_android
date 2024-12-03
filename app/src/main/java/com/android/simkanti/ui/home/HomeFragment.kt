@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
     private var topUpDialog: Dialog? = null
     private val PICK_IMAGE_REQUEST = 1
     private var selectedImageUri: Uri? = null
-    private val baseUrl = "http://192.168.18.13/kasir_toko/api_android"
+    private val baseUrl = "http://192.168.18.17/kasir_toko/api_android"
 
     override fun onCreateView(
         inflater: LayoutInflater,
