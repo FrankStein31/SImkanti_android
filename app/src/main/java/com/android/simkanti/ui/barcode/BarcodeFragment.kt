@@ -160,9 +160,39 @@ class BarcodeFragment : Fragment() {
         apiCall.observe(viewLifecycleOwner) { result ->
             when {
                 result.success -> {
-                    Toast.makeText(requireContext(), "Pembayaran Berhasil", Toast.LENGTH_SHORT).show()
+                    // Dismiss the payment dialog first
                     dialog.dismiss()
-                    barcodeScanner.resume()
+
+                    // Create a custom success alert dialog
+                    val successDialogBuilder = AlertDialog.Builder(requireContext(), R.style.CustomSuccessDialog)
+                    val successDialogView = layoutInflater.inflate(R.layout.dialog_payment_success, null)
+
+                    // Find views in the custom dialog layout
+                    val titleTextView = successDialogView.findViewById<TextView>(R.id.text_success_title)
+                    val messageTextView = successDialogView.findViewById<TextView>(R.id.text_success_message)
+                    val amountTextView = successDialogView.findViewById<TextView>(R.id.text_success_amount)
+                    val closeButton = successDialogView.findViewById<Button>(R.id.btn_success_close)
+
+                    // Set dialog content
+                    titleTextView.text = "Pembayaran Berhasil"
+                    messageTextView.text = "Terima kasih telah melakukan pembayaran"
+                    amountTextView.text = "Total: $amount"
+
+                    // Build and show the dialog
+                    val successDialog = successDialogBuilder.setView(successDialogView).create()
+                    successDialog.show()
+
+                    // Close button listener
+                    closeButton.setOnClickListener {
+                        successDialog.dismiss()
+                        barcodeScanner.resume()
+                    }
+
+                    // Auto-dismiss after 3 seconds
+                    successDialog.window?.decorView?.postDelayed({
+                        successDialog.dismiss()
+                        barcodeScanner.resume()
+                    }, 300000)
                 }
                 else -> {
                     Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
